@@ -6,7 +6,11 @@ namespace TragicTheReckoning
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            Controller controller = new Controller();
+            Model model = new Model();
+            IView view = new View(controller);
+
+            controller.Run(view, model);
         }
     }
 }
