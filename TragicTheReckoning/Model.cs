@@ -11,6 +11,9 @@ namespace TragicTheReckoning
         {
             Stack<Card> deck1 = GetDeck();
             Stack<Card> deck2 = GetDeck();
+
+            Player player1 = new Player("Player1", deck1);
+            Player player2 = new Player("Player2", deck2);
         }
 
         public Stack<Card> GetDeck()

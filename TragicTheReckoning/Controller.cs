@@ -9,7 +9,7 @@ namespace TragicTheReckoning
     {
         public void Run(IView view, Model model)
         {
-            
+            model.Initialize();
         }
     }
 }

@@ -8,19 +8,15 @@ namespace TragicTheReckoning
     public class Player
     {
         public string Name { get; }
-        public int HP { get; }
-        public int MP { get; }
-        public Stack<Card> Deck { get; set; } = new Stack<Card>();
+        public Stack<Card> Deck { get; set; }
+        public int HP { get; } = 10;
+        public int MP { get; } = 0;
         public List<Card> Hand { get; set; } = new List<Card>();
 
-        public Player(string name, int HP, int MP,
-        Stack<Card> deck, List<Card> hand)
+        public Player(string name, Stack<Card> deck)
         {
             Name = name;
-            this.HP = HP;
-            this.MP = MP;
             Deck = deck;
-            Hand = hand;
         }
     }
 }
