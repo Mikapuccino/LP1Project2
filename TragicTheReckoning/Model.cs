@@ -12,8 +12,11 @@ namespace TragicTheReckoning
             Stack<Card> deck1 = GetDeck();
             Stack<Card> deck2 = GetDeck();
 
-            Player player1 = new Player("Player1", deck1);
-            Player player2 = new Player("Player2", deck2);
+            List<Card> hand1 = InitialHand(deck1);
+            List<Card> hand2 = InitialHand(deck2);
+
+            Player player1 = new Player("Player1", deck1, hand1);
+            Player player2 = new Player("Player2", deck2, hand2);
         }
 
         public Stack<Card> GetDeck()
@@ -47,6 +50,18 @@ namespace TragicTheReckoning
         {
             Random rnd = new Random();
             return new Stack<Card>(deck.OrderBy(x => rnd.Next()));
+        }
+
+        public List<Card> InitialHand(Stack<Card> deck)
+        {
+            List<Card> initialHand = new List<Card>();
+            
+            for (int i = 0; i < 6; i++)
+            {
+                initialHand.Add(deck.Pop());
+            }
+
+            return initialHand;
         }
     }
 }
