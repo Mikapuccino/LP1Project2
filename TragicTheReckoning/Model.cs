@@ -7,7 +7,7 @@ namespace TragicTheReckoning
 {
     public class Model
     {
-        public void Initialize()
+        public List<Player> Initialize()
         {
             Stack<Card> deck1 = GetDeck();
             Stack<Card> deck2 = GetDeck();
@@ -17,6 +17,12 @@ namespace TragicTheReckoning
 
             Player player1 = new Player("Player1", deck1, hand1);
             Player player2 = new Player("Player2", deck2, hand2);
+
+            List<Player> players = new List<Player>();
+            players.Add(player1);
+            players.Add(player2);
+
+            return players;
         }
 
         public Stack<Card> GetDeck()
