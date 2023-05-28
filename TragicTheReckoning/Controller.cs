@@ -104,30 +104,35 @@ namespace TragicTheReckoning
             int leftoverDamage = 0;
             int result = 1;
             
+            // While there are cards in each field
             while ((field1.Count != 0) || (field2.Count != 0))
             {
-                if (cardCount1 > field1.Count)
+                // Resets cardCounts if they reach the
+                // max index of one of the fields
+                if (cardCount1 > field1.Count - 1)
                     cardCount1 = 0;
 
-                if (cardCount2 > field2.Count)
+                if (cardCount2 > field2.Count - 1)
                     cardCount2 = 0;
 
+                // Reduces a card's HP depending on
+                // the result of the last battle
                 switch(result)
                 {
-                    case 1:
-                        break;
                     case 2:
                         field2[cardCount2].DP += leftoverDamage;
                         break;
                     case 3:
                         field1[cardCount1].DP += leftoverDamage;
                         break;
-                    case 4:
+                    default:
                         break;
                 }
 
                 result = CardFight(field1[cardCount1], field2[cardCount2]);
 
+                // Sets the leftover damage to be applied to the next
+                // card battle and removes destroyed cards from their fields
                 switch (result)
                 {
                     case 1:
@@ -153,6 +158,8 @@ namespace TragicTheReckoning
             FinalAttack(players, field1, field2);
         }
 
+        // This method is used to reduce the DP of cards that fight
+        // and returns the result of the battle as an int
         public int CardFight(Card card1, Card card2)
         {
             card1.DP -= card2.AP;
@@ -171,6 +178,9 @@ namespace TragicTheReckoning
                 return 4;
         }
 
+        // This method is used to reduce a player's HP by the AP of all cards
+        // left on the opponents field and then clears that field
+        // Nothing happens if both fields are empty
         public void FinalAttack(List<Player> players,
         List<Card> field1, List<Card> field2)
         {
@@ -199,20 +209,25 @@ namespace TragicTheReckoning
             }
         }
 
+        // This method checks if the game has ended, checking each players HP
+        // to see if a player has died and returns true if the game ends
         public bool CheckEnd(List<Player> players)
         {
+            // If Player 1 has died, sets HP to 0 and ends the game
             if (players[0].HP <= 0)
             {
                 players[0].HP = 0;
                 return true;
             }
 
+            // If Player 2 has died, sets HP to 0 and ends the game
             else if (players[1].HP <= 0)
             {
                 players[1].HP = 0;
                 return true;
             }
 
+            // If no player died, the game keeps going
             else
                 return false;
         }
