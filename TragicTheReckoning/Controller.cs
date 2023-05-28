@@ -239,6 +239,12 @@ namespace TragicTheReckoning
                 return true;
             }
 
+            else if ((players[0].Deck.Count == 0) ||
+            (players[1].Deck.Count == 0))
+            {
+                return true;
+            }
+
             // If no player died, the game keeps going
             else
                 return false;
