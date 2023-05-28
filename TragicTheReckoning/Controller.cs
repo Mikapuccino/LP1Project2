@@ -21,6 +21,7 @@ namespace TragicTheReckoning
                 turn++;
                 SetTurnMP(players, turn);
                 SpellPhase(players, field1, field2);
+                AttackPhase(players, field1, field2);
             }
             while (endGame != true);
         }
@@ -92,6 +93,65 @@ namespace TragicTheReckoning
                     else Console.WriteLine("Not a valid option");
                 }
             }
+        }
+
+        public void AttackPhase(List<Player> players,
+        List<Card> field1, List<Card> field2)
+        {
+            int cardCount1 = 0;
+            int cardCount2 = 0;
+            int leftoverDamage = 0;
+            int result;
+            
+            while ((field1.Count != 0) || (field2.Count != 0))
+            {
+                if (cardCount1 > field1.Count)
+                    cardCount1 = 0;
+
+                if (cardCount2 > field2.Count)
+                    cardCount2 = 0;
+
+                result = CardFight(field1[cardCount1], field2[cardCount2]);
+
+                switch (result)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        leftoverDamage = field2[cardCount2].DP;
+                        field2.RemoveAt(cardCount2);
+                        break;
+                    case 3:
+                        leftoverDamage = field1[cardCount1].DP;
+                        field1.RemoveAt(cardCount1);
+                        break;
+                    case 4:
+                        field1.RemoveAt(cardCount1);
+                        field2.RemoveAt(cardCount2);
+                        break;
+                }
+
+                cardCount1 ++;
+                cardCount2 ++;
+            }
+        }
+
+        public int CardFight(Card card1, Card card2)
+        {
+            card1.DP -= card2.AP;
+            card2.DP -= card1.AP;
+
+            if ((card1.DP > 0) && (card2.DP > 0))
+                return 1;
+
+            else if ((card1.DP > 0) && (card2.DP <= 0))
+                return 2;
+
+            else if ((card1.DP <= 0) && (card2.DP > 0))
+                return 3;
+
+            else
+                return 4;
         }
     }
 }
