@@ -22,6 +22,7 @@ namespace TragicTheReckoning
                 SetTurnMP(players, turn);
                 SpellPhase(players, field1, field2);
                 AttackPhase(players, field1, field2);
+                endGame = CheckEnd(players);
             }
             while (endGame != true);
         }
@@ -183,6 +184,7 @@ namespace TragicTheReckoning
                 }
 
                 players[0].HP -= finalDamage;
+                field2.Clear();
             }
 
             else if (field2.Count == 0)
@@ -193,7 +195,26 @@ namespace TragicTheReckoning
                 }
 
                 players[1].HP -= finalDamage;
+                field1.Clear();
             }
+        }
+
+        public bool CheckEnd(List<Player> players)
+        {
+            if (players[0].HP <= 0)
+            {
+                players[0].HP = 0;
+                return true;
+            }
+
+            else if (players[1].HP <= 0)
+            {
+                players[1].HP = 0;
+                return true;
+            }
+
+            else
+                return false;
         }
     }
 }
