@@ -101,7 +101,7 @@ namespace TragicTheReckoning
             int cardCount1 = 0;
             int cardCount2 = 0;
             int leftoverDamage = 0;
-            int result;
+            int result = 1;
             
             while ((field1.Count != 0) || (field2.Count != 0))
             {
@@ -110,6 +110,20 @@ namespace TragicTheReckoning
 
                 if (cardCount2 > field2.Count)
                     cardCount2 = 0;
+
+                switch(result)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        field2[cardCount2].DP += leftoverDamage;
+                        break;
+                    case 3:
+                        field1[cardCount1].DP += leftoverDamage;
+                        break;
+                    case 4:
+                        break;
+                }
 
                 result = CardFight(field1[cardCount1], field2[cardCount2]);
 
@@ -134,6 +148,8 @@ namespace TragicTheReckoning
                 cardCount1 ++;
                 cardCount2 ++;
             }
+
+            FinalAttack(players, field1, field2);
         }
 
         public int CardFight(Card card1, Card card2)
@@ -152,6 +168,32 @@ namespace TragicTheReckoning
 
             else
                 return 4;
+        }
+
+        public void FinalAttack(List<Player> players,
+        List<Card> field1, List<Card> field2)
+        {
+            int finalDamage = 0;
+            
+            if (field1.Count == 0)
+            {
+                for (int i = 0; i < field2.Count; i++)
+                {
+                    finalDamage += field2[i].AP;
+                }
+
+                players[0].HP -= finalDamage;
+            }
+
+            else if (field2.Count == 0)
+            {
+                for (int i = 0; i < field1.Count; i++)
+                {
+                    finalDamage += field1[i].AP;
+                }
+
+                players[1].HP -= finalDamage;
+            }
         }
     }
 }
