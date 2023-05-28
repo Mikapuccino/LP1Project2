@@ -20,6 +20,7 @@ namespace TragicTheReckoning
             {
                 turn++;
                 SetTurnMP(players, turn);
+                DrawCard(players);
                 SpellPhase(players, field1, field2);
                 AttackPhase(players, field1, field2);
                 endGame = CheckEnd(players);
@@ -41,6 +42,17 @@ namespace TragicTheReckoning
                 for (int i = 0; i < 2; i++)
                 {
                     players[i].MP = 5;
+                }
+            }
+        }
+
+        public void DrawCard(List<Player> players)
+        {
+            for (int i = 0; i < 2; i++)
+            {
+                if (players[i].Hand.Count <= 5)
+                {
+                    players[i].Hand.Add(players[i].Deck.Pop());
                 }
             }
         }
