@@ -22,12 +22,18 @@ namespace TragicTheReckoning
 
             do
             {
+                view.AskAction(players[0]);
+                view.AskAction(players[1]);
+                
                 turn++;
                 SetTurnMP(players, turn);
                 DrawCard(players);
                 giveUp = SpellPhase(players, field1, field2);
                 AttackPhase(players, field1, field2);
                 endGame = CheckEnd(players, giveUp);
+
+                
+
             }
             while (endGame != true);
         }

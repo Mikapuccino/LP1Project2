@@ -38,5 +38,35 @@ namespace TragicTheReckoning
             Console.WriteLine();
            
         }
+
+                public void AskAction(Player player)
+        {
+            Console.WriteLine($"{player.Name}, it's your turn.");
+            Console.WriteLine($"Current HP: {player.HP}");
+            Console.WriteLine($"Current mana: {player.MP}");
+            Console.WriteLine("Your Hand:\n");
+
+            // Display player's hand with card details
+            for (int i = 0; i < player.Hand.Count; i++)
+            {
+                Card card = player.Hand[i];
+                Console.WriteLine($"{i + 1}.{card.Name} /{card.Cost}/{card.AP} /{card.DP}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("Choose a card to play (enter the corresponding number):\n");
+        }
+        public void DisplayAction()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+        }
+
+        public void Invalid()
+        {
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine();
+        }
     }
 }
