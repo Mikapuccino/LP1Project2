@@ -12,9 +12,12 @@ namespace TragicTheReckoning
             int turn = 0;
             int giveUp;
             bool endGame = false;
+            
+            view.MainMenu();
+
             List<Card> field1 = new List<Card>();
             List<Card> field2 = new List<Card>();
-            
+
             List<Player> players = model.Initialize();
 
             do

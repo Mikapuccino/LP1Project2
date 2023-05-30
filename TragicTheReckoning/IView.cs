@@ -7,6 +7,6 @@ namespace TragicTheReckoning
 {
     public interface IView
     {
-        
+        void MainMenu();
     }
 }

@@ -40,6 +40,7 @@ namespace TragicTheReckoning
                 newDeck.Push(new Card("Mystical Rock Wall", 2, 0, 5));
                 newDeck.Push(new Card("Lobster McCrabs", 2, 1, 3));
                 newDeck.Push(new Card("Goblin Troll", 3, 3, 2));
+                newDeck.Push(new Card("Blue Steel", 2, 2, 2));
             }
 
             newDeck.Push(new Card("Scorching Heatwave", 4, 5, 3));
