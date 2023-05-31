@@ -15,8 +15,8 @@ namespace TragicTheReckoning
             List<Card> hand1 = InitialHand(deck1);
             List<Card> hand2 = InitialHand(deck2);
 
-            Player player1 = new Player("Player1", deck1, hand1);
-            Player player2 = new Player("Player2", deck2, hand2);
+            Player player1 = new Player("Player 1", deck1, hand1);
+            Player player2 = new Player("Player 2", deck2, hand2);
 
             List<Player> players = new List<Player>();
             players.Add(player1);

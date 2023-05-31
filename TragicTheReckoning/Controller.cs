@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 namespace TragicTheReckoning
 {
     public class Controller
-    {   
+    {
         public void Run(IView view, Model model)
-        {   
+        {
             int turn = 0;
             int giveUp;
             bool endGame = false;
-            
+
             view.MainMenu();
 
             List<Card> field1 = new List<Card>();
@@ -22,17 +22,13 @@ namespace TragicTheReckoning
 
             do
             {
-                view.AskAction(players[0]);
-                view.AskAction(players[1]);
-                
+
                 turn++;
                 SetTurnMP(players, turn);
                 DrawCard(players);
-                giveUp = SpellPhase(players, field1, field2);
+                giveUp = SpellPhase(players, field1, field2, view);
                 AttackPhase(players, field1, field2);
                 endGame = CheckEnd(players, giveUp);
-
-                
 
             }
             while (endGame != true);
@@ -68,23 +64,21 @@ namespace TragicTheReckoning
         }
 
         public int SpellPhase(List<Player> players,
-        List<Card> field1, List<Card> field2)
+        List<Card> field1, List<Card> field2, IView view)
         {
             int cardChosen;
-            
+            int actionResult;
+            bool cardPlayed;
+            bool invalid = false;
+
             for (int i = 0; i < 2; i++)
             {
                 // When the player has 0 MP,
                 // passes to other player or ends the phase
                 while (players[i].MP > 0)
                 {
-                    // WriteLine should go to View, in here for testing
-                    Console.WriteLine(i + 1);
-                    Console.WriteLine(players[i].MP);
-                    Console.WriteLine(players[i].Hand.Count());
-                    
                     // ReadLine should go to View, in here for testing
-                    cardChosen = int.Parse(Console.ReadLine());
+                    cardChosen = view.AskAction(players[i]);
 
                     // If player choose a card in a valid position in his hand
                     if (cardChosen <= players[i].Hand.Count())
@@ -101,19 +95,56 @@ namespace TragicTheReckoning
                             else field2.Add(players[i].Hand[cardChosen - 1]);
 
                             // Reduces player MP by the cost of the card played
-                            players[i].MP -= 
+                            players[i].MP -=
                             players[i].Hand[cardChosen - 1].Cost;
 
                             // Removes card from the hand
                             players[i].Hand.RemoveAt(cardChosen - 1);
+
+                            actionResult = 1;
+                            cardPlayed = true;
                         }
 
                         // WriteLine should go to View, in here for testing
-                        else Console.WriteLine("Not enough mana");
+                        else
+                        {
+                            actionResult = 2;
+                            cardPlayed = false;
+                        }
+
                     }
 
                     // WriteLine should go to View, in here for testing
-                    else Console.WriteLine("Not a valid option");
+                    else
+                    {
+                        actionResult = 3;
+                        cardPlayed = false;
+                        invalid = true;
+                    }
+
+                    if (cardPlayed)
+                    {
+                        if (i == 0)
+                        {
+                            view.DisplayAction(actionResult, players[i], field1[field1.IndexOf(field1.Max())]);
+                        }
+                        else
+                        {
+                            view.DisplayAction(actionResult, players[i], field2[field2.IndexOf(field2.Max())]);
+                        }
+
+                    }
+                    else if (invalid)
+                    {
+                        view.DisplayAction(actionResult, players[i], players[i].Hand[0]);
+                        invalid = false;
+                    }
+                    else
+                    {
+                        view.DisplayAction(actionResult, players[i], players[i].Hand[0]);
+                    }
+
+
                 }
             }
 
@@ -127,7 +158,7 @@ namespace TragicTheReckoning
             int cardCount2 = 0;
             int leftoverDamage = 0;
             int result = 1;
-            
+
             // While there are cards in each field
             while ((field1.Count != 0) || (field2.Count != 0))
             {
@@ -141,7 +172,7 @@ namespace TragicTheReckoning
 
                 // Reduces a card's HP depending on
                 // the result of the last battle
-                switch(result)
+                switch (result)
                 {
                     case 2:
                         field2[cardCount2].DP += leftoverDamage;
@@ -175,8 +206,8 @@ namespace TragicTheReckoning
                         break;
                 }
 
-                cardCount1 ++;
-                cardCount2 ++;
+                cardCount1++;
+                cardCount2++;
             }
 
             FinalAttack(players, field1, field2);
@@ -209,7 +240,7 @@ namespace TragicTheReckoning
         List<Card> field1, List<Card> field2)
         {
             int finalDamage = 0;
-            
+
             if (field1.Count == 0)
             {
                 for (int i = 0; i < field2.Count; i++)

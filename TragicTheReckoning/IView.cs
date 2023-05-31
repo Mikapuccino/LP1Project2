@@ -8,6 +8,7 @@ namespace TragicTheReckoning
     public interface IView
     {
         void MainMenu();
-        void AskAction(Player player);
+        int AskAction(Player player);
+        public void DisplayAction(int actionResult,Player player, Card card);
     }
 }
