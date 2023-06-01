@@ -126,25 +126,18 @@ namespace TragicTheReckoning
                     {
                         if (i == 0)
                         {
-                            view.DisplayAction(actionResult, players[i], field1[field1.IndexOf(field1.Max())]);
+                            view.DisplayAction(actionResult, players[i], field1[field1.Count() - 1]);
                         }
                         else
                         {
-                            view.DisplayAction(actionResult, players[i], field2[field2.IndexOf(field2.Max())]);
+                            view.DisplayAction(actionResult, players[i], field2[field2.Count() - 1]);
                         }
 
                     }
-                    else if (invalid)
-                    {
-                        view.DisplayAction(actionResult, players[i], players[i].Hand[0]);
-                        invalid = false;
-                    }
-                    else
+                    else if (!cardPlayed)
                     {
                         view.DisplayAction(actionResult, players[i], players[i].Hand[0]);
                     }
-
-
                 }
             }
 
