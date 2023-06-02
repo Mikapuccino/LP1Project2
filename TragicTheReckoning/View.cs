@@ -63,7 +63,7 @@ namespace TragicTheReckoning
             Console.WriteLine();
             if (actionResult == 1)
             {
-                
+
                 Console.WriteLine($"{player.Name} played \u001b[32m{card.Name}\u001b[37m\n");
             }
             if (actionResult == 2)
@@ -76,11 +76,50 @@ namespace TragicTheReckoning
             }
         }
 
-        public void Fight()
+        public void Fight(Card card1, Card card2)
         {
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine($"P1: {card1.Name} Fights P2: {card2.Name}");
+            Console.WriteLine($"P1 card took {card2.AP} damage and P2 card took {card1.AP} damage");
+        }
+
+        public void FightResult(int result, Card card1, Card card2)
+        {
+            switch (result)
+            {
+                case 1:
+                    Console.WriteLine($"Both cards survived");
+                    break;
+                case 2:
+                    Console.WriteLine($"{card2.Name} has died");
+                    break;
+                case 3:
+                    Console.WriteLine($"{card1.Name} has died");
+                    break;
+                case 4:
+                    Console.WriteLine($"Both cards have died\n");
+                    break;
+            }
+
+        }
+
+        public void FinalHP(int damage, int playerDamaged, List<Player> players)
+        {
+            if (playerDamaged == 1)
+            {
+                Console.WriteLine($"{players[0].Name} took {damage} damage");
+                
+            }
+            else if (playerDamaged == 2)
+            {
+                Console.WriteLine($"{players[1].Name} took {damage} damage");
+            } 
+            else
+            {
+                Console.WriteLine($"No player took damage");
+            }
+            Console.WriteLine($"{players[0].Name} has {players[0].HP} HP.");
+            Console.WriteLine($"{players[1].Name} has {players[1].HP} HP.\n");
+
         }
     }
 }

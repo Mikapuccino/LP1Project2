@@ -27,7 +27,7 @@ namespace TragicTheReckoning
                 SetTurnMP(players, turn);
                 DrawCard(players);
                 giveUp = SpellPhase(players, field1, field2, view);
-                AttackPhase(players, field1, field2);
+                AttackPhase(players, field1, field2, view);
                 endGame = CheckEnd(players, giveUp);
 
             }
@@ -145,7 +145,7 @@ namespace TragicTheReckoning
         }
 
         public void AttackPhase(List<Player> players,
-        List<Card> field1, List<Card> field2)
+        List<Card> field1, List<Card> field2, IView view)
         {
             int cardCount1 = 0;
             int cardCount2 = 0;
@@ -178,7 +178,8 @@ namespace TragicTheReckoning
                 }
 
                 result = CardFight(field1[cardCount1], field2[cardCount2]);
-
+                view.Fight(field1[cardCount1], field2[cardCount2]);
+                view.FightResult(result, field1[cardCount1], field2[cardCount2]);
                 // Sets the leftover damage to be applied to the next
                 // card battle and removes destroyed cards from their fields
                 switch (result)
@@ -198,12 +199,13 @@ namespace TragicTheReckoning
                         field2.RemoveAt(cardCount2);
                         break;
                 }
-
+                
+    
                 cardCount1++;
                 cardCount2++;
             }
 
-            FinalAttack(players, field1, field2);
+            FinalAttack(players, field1, field2, view);
         }
 
         // This method is used to reduce the DP of cards that fight
@@ -230,12 +232,14 @@ namespace TragicTheReckoning
         // left on the opponents field and then clears that field
         // Nothing happens if both fields are empty
         public void FinalAttack(List<Player> players,
-        List<Card> field1, List<Card> field2)
+        List<Card> field1, List<Card> field2, IView view)
         {
             int finalDamage = 0;
+            int playerDamaged = 0;
 
             if (field1.Count == 0)
             {
+                playerDamaged = 1;
                 for (int i = 0; i < field2.Count; i++)
                 {
                     finalDamage += field2[i].AP;
@@ -247,6 +251,7 @@ namespace TragicTheReckoning
 
             else if (field2.Count == 0)
             {
+                playerDamaged = 2;
                 for (int i = 0; i < field1.Count; i++)
                 {
                     finalDamage += field1[i].AP;
@@ -255,6 +260,13 @@ namespace TragicTheReckoning
                 players[1].HP -= finalDamage;
                 field1.Clear();
             }
+            if ((field1.Count == 0) && (field2.Count == 0))
+            {
+                playerDamaged = 0;
+            }
+            view.FinalHP(finalDamage, playerDamaged, players);
+
+            
         }
 
         // This method checks if the game has ended, checking each players HP
