@@ -69,14 +69,31 @@ namespace TragicTheReckoning
             int cardChosen;
             int actionResult;
             bool cardPlayed;
-            bool invalid = false;
+            bool validCards;
 
             for (int i = 0; i < 2; i++)
             {
+                validCards = true;
+                
                 // When the player has 0 MP,
                 // passes to other player or ends the phase
-                while (players[i].MP > 0)
+                while ((players[i].MP > 0) && validCards)
                 {
+                    int minimumMana = 5;
+                    
+                    foreach (Card c in players[i].Hand)
+                    {
+                        if (minimumMana > c.Cost)
+                        {
+                            minimumMana = c.Cost;
+                        }
+                    }
+
+                    if (players[i].MP < minimumMana)
+                    {
+                        validCards = false;
+                    }
+                    
                     // ReadLine should go to View, in here for testing
                     cardChosen = view.AskAction(players[i]);
 
@@ -111,7 +128,13 @@ namespace TragicTheReckoning
                             actionResult = 2;
                             cardPlayed = false;
                         }
+                    }
 
+                    else if (cardChosen == players[i].Hand.Count() + 1)
+                    {
+                        validCards = false;
+                        actionResult = 2;
+                        cardPlayed = false;
                     }
 
                     // WriteLine should go to View, in here for testing
@@ -119,7 +142,6 @@ namespace TragicTheReckoning
                     {
                         actionResult = 3;
                         cardPlayed = false;
-                        invalid = true;
                     }
 
                     if (cardPlayed)
@@ -153,7 +175,7 @@ namespace TragicTheReckoning
             int result = 1;
 
             // While there are cards in each field
-            while ((field1.Count != 0) || (field2.Count != 0))
+            while ((field1.Count != 0) && (field2.Count != 0))
             {
                 // Resets cardCounts if they reach the
                 // max index of one of the fields
@@ -176,7 +198,6 @@ namespace TragicTheReckoning
                     default:
                         break;
                 }
-
                 result = CardFight(field1[cardCount1], field2[cardCount2]);
                 view.Fight(field1[cardCount1], field2[cardCount2]);
                 view.FightResult(result, field1[cardCount1], field2[cardCount2]);
@@ -199,8 +220,6 @@ namespace TragicTheReckoning
                         field2.RemoveAt(cardCount2);
                         break;
                 }
-                
-    
                 cardCount1++;
                 cardCount2++;
             }
