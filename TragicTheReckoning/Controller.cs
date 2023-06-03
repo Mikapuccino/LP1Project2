@@ -137,6 +137,13 @@ namespace TragicTheReckoning
                         cardPlayed = false;
                     }
 
+                    else if (cardChosen == players[i].Hand.Count() + 2)
+                    {
+                        validCards = false;
+                        actionResult = 5;
+                        cardPlayed = false;
+                    }
+
                     // WriteLine should go to View, in here for testing
                     else
                     {
@@ -150,6 +157,8 @@ namespace TragicTheReckoning
                         {
                             view.DisplayAction(actionResult, players[i], field1[field1.Count() - 1]);
                         }
+                        
+
                         else
                         {
                             view.DisplayAction(actionResult, players[i], field2[field2.Count() - 1]);
@@ -158,6 +167,16 @@ namespace TragicTheReckoning
                     }
                     else if (!cardPlayed)
                     {
+                        if (actionResult == 5)
+                        {
+                            view.DisplayAction(actionResult, players[i], players[i].Hand[0]);
+                            
+                            if (players[i].Name == "Player 1")
+                                return 1;
+
+                            else return 2;
+                        }
+                        
                         view.DisplayAction(actionResult, players[i], players[i].Hand[0]);
                     }
                 }
@@ -191,37 +210,50 @@ namespace TragicTheReckoning
                 {
                     case 2:
                         field2[cardCount2].DP += leftoverDamage;
+                        if (field2[cardCount2].DP <= 0)
+                        {
+                            view.FightResult(result, field1[cardCount1], field2[cardCount2]);
+                            field2.RemoveAt(cardCount2);
+                        }
                         break;
                     case 3:
                         field1[cardCount1].DP += leftoverDamage;
+                        if (field1[cardCount1].DP <= 0)
+                        {
+                            view.FightResult(result, field1[cardCount1], field2[cardCount2]);
+                            field1.RemoveAt(cardCount1);
+                        }
                         break;
                     default:
                         break;
                 }
-                result = CardFight(field1[cardCount1], field2[cardCount2]);
-                view.Fight(field1[cardCount1], field2[cardCount2]);
-                view.FightResult(result, field1[cardCount1], field2[cardCount2]);
-                // Sets the leftover damage to be applied to the next
-                // card battle and removes destroyed cards from their fields
-                switch (result)
+                if ((field1.Count != 0) && (field2.Count != 0))
                 {
-                    case 1:
-                        break;
-                    case 2:
-                        leftoverDamage = field2[cardCount2].DP;
-                        field2.RemoveAt(cardCount2);
-                        break;
-                    case 3:
-                        leftoverDamage = field1[cardCount1].DP;
-                        field1.RemoveAt(cardCount1);
-                        break;
-                    case 4:
-                        field1.RemoveAt(cardCount1);
-                        field2.RemoveAt(cardCount2);
-                        break;
+                    result = CardFight(field1[cardCount1], field2[cardCount2]);
+                    view.Fight(field1[cardCount1], field2[cardCount2]);
+                    view.FightResult(result, field1[cardCount1], field2[cardCount2]);
+                    // Sets the leftover damage to be applied to the next
+                    // card battle and removes destroyed cards from their fields
+                    switch (result)
+                    {
+                        case 1:
+                            break;
+                        case 2:
+                            leftoverDamage = field2[cardCount2].DP;
+                            field2.RemoveAt(cardCount2);
+                            break;
+                        case 3:
+                            leftoverDamage = field1[cardCount1].DP;
+                            field1.RemoveAt(cardCount1);
+                            break;
+                        case 4:
+                            field1.RemoveAt(cardCount1);
+                            field2.RemoveAt(cardCount2);
+                            break;
+                    }
+                    cardCount1++;
+                    cardCount2++;
                 }
-                cardCount1++;
-                cardCount2++;
             }
 
             FinalAttack(players, field1, field2, view);
@@ -287,7 +319,7 @@ namespace TragicTheReckoning
                 }
                 field1.Clear();
             }
-            else if ((field1.Count == 0) && (field2.Count == 0))
+            if (finalDamage == 0)
             {
                 playerDamaged = 0;
             }

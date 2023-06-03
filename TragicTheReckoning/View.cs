@@ -54,6 +54,7 @@ namespace TragicTheReckoning
             }
             Console.WriteLine();
             Console.WriteLine($"{player.Hand.Count + 1} Skip turn");
+            Console.WriteLine($"{player.Hand.Count + 2} Give up");
             Console.WriteLine();
             Console.WriteLine("Choose a card to play (enter the corresponding number):\n");
 
@@ -79,6 +80,10 @@ namespace TragicTheReckoning
             if (actionResult == 4)
             {
                 Console.WriteLine($"{player.Name} skipped a turn\n");
+            }
+            if (actionResult == 5)
+            {
+                Console.WriteLine($"{player.Name} has given up\n");
             }
         }
 
