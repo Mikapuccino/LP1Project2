@@ -13,6 +13,7 @@ namespace TragicTheReckoning
         void Fight(Card card1, Card card2);
         void FightResult(int result, Card card1, Card card2);
         void FinalHP(int damage, int playerDamaged, List<Player> players);
+        void PlayerWin(List<Player> players, int endGame);
 
     }
 }

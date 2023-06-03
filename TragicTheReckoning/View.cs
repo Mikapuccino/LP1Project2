@@ -53,6 +53,8 @@ namespace TragicTheReckoning
                 Console.WriteLine($"{i + 1}.{card.Name} |\u001b[33m{card.Cost}\u001b[37m|\u001b[31m{card.AP}\u001b[37m|\u001b[34m{card.DP}\u001b[37m|");
             }
             Console.WriteLine();
+            Console.WriteLine($"{player.Hand.Count + 1} Skip turn");
+            Console.WriteLine();
             Console.WriteLine("Choose a card to play (enter the corresponding number):\n");
 
             return int.Parse(Console.ReadLine());
@@ -73,6 +75,10 @@ namespace TragicTheReckoning
             if (actionResult == 3)
             {
                 Console.WriteLine($"\u001b[31mInvalid option\u001b[37m\n");
+            }
+            if (actionResult == 4)
+            {
+                Console.WriteLine($"{player.Name} skipped a turn\n");
             }
         }
 
@@ -107,12 +113,12 @@ namespace TragicTheReckoning
             if (playerDamaged == 1)
             {
                 Console.WriteLine($"{players[0].Name} took {damage} damage");
-                
+
             }
             else if (playerDamaged == 2)
             {
                 Console.WriteLine($"{players[1].Name} took {damage} damage");
-            } 
+            }
             else
             {
                 Console.WriteLine($"No player took damage");
@@ -121,5 +127,32 @@ namespace TragicTheReckoning
             Console.WriteLine($"{players[1].Name} has {players[1].HP} HP.\n");
 
         }
+
+        public void PlayerWin(List<Player> players, int endGame)
+        {
+            if (endGame == 1)
+            {
+                Console.WriteLine($"{players[1].Name} won!");
+            }
+            if (endGame == 2)
+            {
+                Console.WriteLine($"{players[0].Name} won!");
+            }
+            if (endGame == 3)
+            {
+                if (players[0].HP > players[1].HP)
+                {
+                    Console.WriteLine($"{players[0].Name} won!");
+                }
+                else
+                {
+                    Console.WriteLine($"{players[1].Name} won!");
+                }
+
+            }
+
+
+        }
+
     }
 }

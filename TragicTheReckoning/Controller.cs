@@ -11,8 +11,7 @@ namespace TragicTheReckoning
         {
             int turn = 0;
             int giveUp;
-            bool endGame = false;
-
+            int endGame = 0;
             view.MainMenu();
 
             List<Card> field1 = new List<Card>();
@@ -31,7 +30,8 @@ namespace TragicTheReckoning
                 endGame = CheckEnd(players, giveUp);
 
             }
-            while (endGame != true);
+            while (endGame > 3);
+            view.PlayerWin(players, endGame);
         }
 
         public void SetTurnMP(List<Player> players, int turn)
@@ -133,7 +133,7 @@ namespace TragicTheReckoning
                     else if (cardChosen == players[i].Hand.Count() + 1)
                     {
                         validCards = false;
-                        actionResult = 2;
+                        actionResult = 4;
                         cardPlayed = false;
                     }
 
@@ -265,6 +265,10 @@ namespace TragicTheReckoning
                 }
 
                 players[0].HP -= finalDamage;
+                if (players[0].HP < 0)
+                {
+                    players[0].HP = 0;
+                }
                 field2.Clear();
             }
 
@@ -277,9 +281,13 @@ namespace TragicTheReckoning
                 }
 
                 players[1].HP -= finalDamage;
+                if (players[1].HP < 0)
+                {
+                    players[1].HP = 0;
+                }
                 field1.Clear();
             }
-            if ((field1.Count == 0) && (field2.Count == 0))
+            else if ((field1.Count == 0) && (field2.Count == 0))
             {
                 playerDamaged = 0;
             }
@@ -290,29 +298,29 @@ namespace TragicTheReckoning
 
         // This method checks if the game has ended, checking each players HP
         // to see if a player has died and returns true if the game ends
-        public bool CheckEnd(List<Player> players, int giveUp)
+        public int CheckEnd(List<Player> players, int giveUp)
         {
             // If Player 1 has died or given up, sets HP to 0 and ends the game
             if ((players[0].HP <= 0) || (giveUp == 1))
             {
                 players[0].HP = 0;
-                return true;
+                return 1;
             }
 
             // If Player 2 has died or given up, sets HP to 0 and ends the game
             else if ((players[1].HP <= 0) || (giveUp == 2))
             {
                 players[1].HP = 0;
-                return true;
+                return 2;
             }
 
             else if ((players[0].Deck.Count == 0) ||
             (players[1].Deck.Count == 0))
-                return true;
+                return 3;
 
             // If no player died, the game keeps going
             else
-                return false;
+                return 4;
         }
     }
 }
