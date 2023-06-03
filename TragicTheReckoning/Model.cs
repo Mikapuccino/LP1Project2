@@ -7,6 +7,11 @@ namespace TragicTheReckoning
 {
     public class Model
     {
+        /// <summary>
+        /// Main method of the class, creates the players, their decks
+        /// and their hands
+        /// </summary>
+        /// <returns>The players ready to play the game</returns>
         public List<Player> Initialize()
         {
             Stack<Card> deck1 = GetDeck();
@@ -25,6 +30,11 @@ namespace TragicTheReckoning
             return players;
         }
 
+        /// <summary>
+        /// Creates every card that will be in each player's deck
+        /// and shuffles them
+        /// </summary>
+        /// <returns>Deck of a player</returns>
         public Stack<Card> GetDeck()
         {
             Stack<Card> newDeck = new Stack<Card>();
@@ -53,12 +63,24 @@ namespace TragicTheReckoning
             return newDeck;
         }
 
+        /// <summary>
+        /// Shuffles the given deck
+        /// </summary>
+        /// <param name="deck">Deck of a player</param>
+        /// <typeparam name="Card">Card class that every card uses</typeparam>
+        /// <returns>Shuffled given deck</returns>
         public Stack<Card> ShuffleDeck<Card>(Stack<Card> deck)
         {
             Random rnd = new Random();
             return new Stack<Card>(deck.OrderBy(x => rnd.Next()));
         }
 
+        /// <summary>
+        /// Draws six cards from the given deck and adds them to the
+        /// hand of a player
+        /// </summary>
+        /// <param name="deck">Deck of a player</param>
+        /// <returns>The initial hand for a player</returns>
         public List<Card> InitialHand(Stack<Card> deck)
         {
             List<Card> initialHand = new List<Card>();
