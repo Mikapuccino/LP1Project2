@@ -26,4 +26,4 @@ Nelson Milheiro - 21904365
 
 ## Solution
 
-![Alt text](Untitled%20Diagram.drawio%20(2).png)
+![Alt text](UML.png)
