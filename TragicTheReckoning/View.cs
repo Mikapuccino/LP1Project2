@@ -27,7 +27,7 @@ namespace TragicTheReckoning
             Console.WriteLine("Welcome to Tragic: \u001b[31mThe Reckoning!\u001b[37m");
             Console.WriteLine("----");
             Console.WriteLine("Rules:\n");
-            Console.WriteLine("- Each player starts with 10 \u001b[32m HP\u001b[37m and 0\u001b[36m MP\u001b[37m.");
+            Console.WriteLine("- Each player starts with 10\u001b[32m HP\u001b[37m and 0\u001b[36m MP\u001b[37m.");
             Console.WriteLine("Each deck is comprised of 20 cards that are shuffled at the start of the game.");
             Console.WriteLine("- Players take turns playing cards and attacking.");
             Console.WriteLine("- Cards have a cost \u001b[33m(C)\u001b[37m, attack points \u001b[31m(AP)\u001b[37m, and defense points \u001b[34m(DP)\u001b[37m.");
