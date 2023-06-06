@@ -30,7 +30,9 @@ Nelson Milheiro - 21904365
 ## Solution
 
 After displaying the instructions and rules of the game, the game starts with
-player one being the first to play, starting the spell phase. It displays the current player's turn hand and asks the player to choose a card to play, unless they can't play any card due to their costs being higher then their current
+player one being the first to play, starting the spell phase. It displays the
+current player's turn hand and asks the player to choose a card to play, unless
+they can't play any card due to their costs being higher then their current
 mana. Every card player goes to the respective player's field.
 
 After the players play their chosen cards and can't play anymore or decide to
