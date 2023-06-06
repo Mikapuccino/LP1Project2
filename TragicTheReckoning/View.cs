@@ -87,7 +87,7 @@ namespace TragicTheReckoning
             if (actionResult == 1)
             {
 
-                Console.WriteLine($"{player.Name} played \u001b[31;1m{card.Name}\u001b[37m\n");
+                Console.WriteLine($"{player.Name} played \u001b[31;1m{card.Name}\u001b[37m \u001b[0m  \n");
             }
             if (actionResult == 2)
             {
@@ -114,8 +114,8 @@ namespace TragicTheReckoning
         /// <param name="card2">The second card.</param>
         public void Fight(Card card1, Card card2)
         {
-            Console.WriteLine($"P1: {card1.Name} Fights P2: {card2.Name}");
-            Console.WriteLine($"P1 card took {card2.AP} damage and P2 card took {card1.AP} damage");
+            Console.WriteLine($"P1: \u001b[31;1m{card1.Name}\u001b[37m \u001b[0m Fights P2: \u001b[31;1m{card2.Name}\u001b[37m \u001b[0m");
+            Console.WriteLine($"P1 card took \u001b[31m{card2.AP}\u001b[37m damage and P2 card took \u001b[31m{card1.AP}\u001b[37m damage");
         }
 
         /// <summary>
@@ -154,19 +154,19 @@ namespace TragicTheReckoning
         {
             if (playerDamaged == 1)
             {
-                Console.WriteLine($"{players[0].Name} took {damage} damage");
+                Console.WriteLine($"{players[0].Name} took \u001b[31m{damage}\u001b[37m damage");
 
             }
             else if (playerDamaged == 2)
             {
-                Console.WriteLine($"{players[1].Name} took {damage} damage");
+                Console.WriteLine($"{players[1].Name} took \u001b[31m{damage}\u001b[37m damage");
             }
             else
             {
                 Console.WriteLine($"No player took damage");
             }
-            Console.WriteLine($"{players[0].Name} has {players[0].HP} HP.");
-            Console.WriteLine($"{players[1].Name} has {players[1].HP} HP.\n");
+            Console.WriteLine($"{players[0].Name} has {players[0].HP}\u001b[32m HP\u001b[37m.");
+            Console.WriteLine($"{players[1].Name} has {players[1].HP}\u001b[32m HP\u001b[37m.\n");
 
         }
 
