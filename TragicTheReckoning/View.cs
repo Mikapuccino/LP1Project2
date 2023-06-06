@@ -9,23 +9,31 @@ namespace TragicTheReckoning
     {
         private readonly Controller controller;
 
+        /// <summary>
+        /// Initializes a new instance of the View class.
+        /// </summary>
+        /// <param name="controller">The controller object.</param>
         public View(Controller controller)
         {
             this.controller = controller;
         }
 
+        /// <summary>
+        /// Displays the main menu of the game.
+        /// </summary>
         public void MainMenu()
         {
-            Console.WriteLine("Welcome to Tragic: The Reckoning!");
+            Console.WriteLine();
+            Console.WriteLine("Welcome to Tragic: \u001b[31mThe Reckoning!\u001b[37m");
             Console.WriteLine("----");
-            Console.WriteLine("Rules:");
-            Console.WriteLine("- Each player starts with 10 HP and 0 MP.");
+            Console.WriteLine("Rules:\n");
+            Console.WriteLine("- Each player starts with 10 \u001b[32m HP\u001b[37m and 0\u001b[36m MP\u001b[37m.");
             Console.WriteLine("Each deck is comprised of 20 cards that are shuffled at the start of the game.");
             Console.WriteLine("- Players take turns playing cards and attacking.");
             Console.WriteLine("- Cards have a cost \u001b[33m(C)\u001b[37m, attack points \u001b[31m(AP)\u001b[37m, and defense points \u001b[34m(DP)\u001b[37m.");
             Console.WriteLine("You start the game with 6 cards in your hand.");
             Console.WriteLine("- Each turn there are 2 phases, the Spell Phase and the Attack Phase.");
-            Console.WriteLine("In the first 4 turns, your amount of mana is correspondent to the turn(turn 1- mana=1, turn 2- mana=2,...) but after turn 5 your max mana will always be 5.");
+            Console.WriteLine("In the first 4 turns, your amount of mana is correspondent to the turn(turn 1-\u001b[36m mana\u001b[37m = 1, turn 2-\u001b[36m mana\u001b[37m = 2,...) but after turn 5 your max mana will always be 5.");
             Console.WriteLine("- To play a card, enter the number corresponding to the card in your hand.");
             Console.WriteLine("- The card's cost must be less than or equal to your current MP (Mana Points).");
             Console.WriteLine("- After playing cards, you enter the attack phase.");
@@ -39,11 +47,16 @@ namespace TragicTheReckoning
 
         }
 
+        /// <summary>
+        /// Asks the player for their action and returns the chosen action.
+        /// </summary>
+        /// <param name="player">The current player.</param>
+        /// <returns>The chosen action.</returns>
         public int AskAction(Player player)
         {
             Console.WriteLine($"{player.Name}, it's your turn.");
-            Console.WriteLine($"Current HP: {player.HP}");
-            Console.WriteLine($"Current mana: {player.MP}");
+            Console.WriteLine($"Current \u001b[32mHP\u001b[37m: {player.HP}");
+            Console.WriteLine($"Current\u001b[36m mana\u001b[37m: {player.MP}");
             Console.WriteLine("Your Hand:\n");
 
             // Display player's hand with card details
@@ -61,13 +74,20 @@ namespace TragicTheReckoning
             return int.Parse(Console.ReadLine());
 
         }
+
+        /// <summary>
+        /// Displays the result of the player's action.
+        /// </summary>
+        /// <param name="actionResult">The result of the action.</param>
+        /// <param name="player">The current player.</param>
+        /// <param name="card">The card played by the player.</param>
         public void DisplayAction(int actionResult, Player player, Card card)
         {
             Console.WriteLine();
             if (actionResult == 1)
             {
 
-                Console.WriteLine($"{player.Name} played \u001b[32m{card.Name}\u001b[37m\n");
+                Console.WriteLine($"{player.Name} played \u001b[31;1m{card.Name}\u001b[37m\n");
             }
             if (actionResult == 2)
             {
@@ -87,12 +107,23 @@ namespace TragicTheReckoning
             }
         }
 
+        /// <summary>
+        /// Displays the fight between two cards.
+        /// </summary>
+        /// <param name="card1">The first card.</param>
+        /// <param name="card2">The second card.</param>
         public void Fight(Card card1, Card card2)
         {
             Console.WriteLine($"P1: {card1.Name} Fights P2: {card2.Name}");
             Console.WriteLine($"P1 card took {card2.AP} damage and P2 card took {card1.AP} damage");
         }
 
+        /// <summary>
+        /// Displays the result of a fight between two cards.
+        /// </summary>
+        /// <param name="result">The result of the fight.</param>
+        /// <param name="card1">The first card.</param>
+        /// <param name="card2">The second card.</param>
         public void FightResult(int result, Card card1, Card card2)
         {
             switch (result)
@@ -113,6 +144,12 @@ namespace TragicTheReckoning
 
         }
 
+        /// <summary>
+        /// Displays the final HP of the players after a fight.
+        /// </summary>
+        /// <param name="damage">The damage dealt.</param>
+        /// <param name="playerDamaged">The player who took damage.</param>
+        /// <param name="players">The list of players.</param>
         public void FinalHP(int damage, int playerDamaged, List<Player> players)
         {
             if (playerDamaged == 1)
@@ -133,11 +170,16 @@ namespace TragicTheReckoning
 
         }
 
+        /// <summary>
+        /// Displays the winner of the game.
+        /// </summary>
+        /// <param name="players">The list of players.</param>
+        /// <param name="endGame">The end game condition.</param>
         public void PlayerWin(List<Player> players, int endGame)
         {
             if (endGame == 1)
             {
-                Console.WriteLine($"{players[1].Name} won!");
+                Console.WriteLine($"\u001b[32m{players[1].Name} won!\u001b[37m");
             }
             if (endGame == 2)
             {
